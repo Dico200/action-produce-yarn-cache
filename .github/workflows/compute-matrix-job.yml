@@ -14,6 +14,8 @@ jobs:
           result-encoding: string
           script: 'console.log(["a", "b"])'
 
+      - run: echo ${{ steps.get-list.result }}
+
   use_list:
     runs-on: ubuntu-latest
     needs:
