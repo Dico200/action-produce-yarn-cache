@@ -5,9 +5,8 @@ on: push
 jobs:
   prepare:
     runs-on: ubuntu-latest
-    outputs:
-      ci_matrix_enabled: ${{ steps.get-ci-matrix.outputs.enabled }}
-      ci_matrix: ${{ steps.get-ci-matrix.outputs.matrix }}
+    outputs: ${{ fromJSON(steps.get-ci-matrix.outputs.result) }}
+
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
@@ -25,10 +24,10 @@ jobs:
     needs:
       - prepare
     strategy:
-      matrix: ${{ fromJSON(needs.prepare.outputs.ci_matrix) }}
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
 
     steps:
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '>=12'
-      - run: echo "${{ needs.prepare.outputs.ci_matrix }}"
+      - run: echo "${{ matrix.value }}"
