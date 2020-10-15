@@ -38,6 +38,6 @@ jobs:
           node -p "`${{ matrix.value }}`.replace(`/`, `_`)" >value.txt
           set /P value=<value.txt
           del value.txt
-          echo "::set-output name=value::%value%"
+          echo ::set-output name=value::%value%
 
       - run: "echo value: ${{ steps.get-noslash.outputs.value }}"
