@@ -6,7 +6,8 @@ jobs:
   prepare:
     runs-on: ubuntu-latest
     outputs:
-      ci_matrix: ${{ steps.get-ci-matrix.outputs.result }}
+      ci_matrix_enabled: ${{ steps.get-ci-matrix.outputs.enabled }}
+      ci_matrix: ${{ steps.get-ci-matrix.outputs.matrix }}
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
@@ -24,7 +25,7 @@ jobs:
     needs:
       - prepare
     strategy:
-      matrix: ${{ fromJSON(fromJSON(needs.prepare.outputs.ci_matrix).matrix) }}
+      matrix: ${{ fromJSON(fromJSON(needs.prepare.outputs.ci_matrix)) }}
 
     steps:
       - uses: actions/setup-node@v2-beta
