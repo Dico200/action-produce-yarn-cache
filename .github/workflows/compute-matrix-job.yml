@@ -13,15 +13,15 @@ jobs:
         with:
           script: return [1, 2]
 
-      - run: echo ${{ steps.get-list.result }}
+      - run: echo value=${{ steps.get-list.result }}
 
   use_list:
     runs-on: ubuntu-latest
     needs:
       - get_list
-    strategy:
-      matrix:
-        value: ${{ fromJSON(needs.get_list.outputs.list) }}
+    # strategy:
+    #   matrix:
+    #     value: ${{ fromJSON(needs.get_list.outputs) }}
 
     steps:
-      - run: "echo value: ${{ matrix.value }}"
+      - run: "echo value: ${{ needs.get_list.outputs }}"
