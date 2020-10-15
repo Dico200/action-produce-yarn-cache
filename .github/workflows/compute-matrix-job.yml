@@ -19,14 +19,12 @@ jobs:
             const script = require(`${process.env.GITHUB_WORKSPACE}/get-ci-matrix.js`);
             return await script({ github, context, core, io });
 
-      - run: echo value=${{ steps.get-ci-matrix.outputs.result }}
-
   run_matrix:
     runs-on: windows-2019
     needs:
       - prepare
     strategy:
-      matrix: ${{ fromJSON(needs.prepare.outputs.ci_matrix) }}
+      matrix: ${{ fromJSON(needs.prepare.outputs.ci_matrix).matrix }}
 
     steps:
       - uses: actions/setup-node@v2-beta
