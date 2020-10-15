@@ -20,7 +20,7 @@ jobs:
       - get_list
     strategy:
       matrix:
-        value: needs.get_list.outputs.list
+        value: [needs.get_list.outputs.list[0], needs.get_list.outputs.list[1]]
 
     steps:
       - run: "echo value: ${{ matrix.value }}"
