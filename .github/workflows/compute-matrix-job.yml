@@ -24,4 +24,4 @@ jobs:
     #     value: ${{ fromJSON(needs.get_list.outputs) }}
 
     steps:
-      - run: "echo value: ${{ needs.get_list.outputs }}"
+      - run: "echo value: ${{ toJSON(needs.get_list.outputs) }}"
