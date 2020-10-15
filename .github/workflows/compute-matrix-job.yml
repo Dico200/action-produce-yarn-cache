@@ -6,12 +6,13 @@ jobs:
   get_list:
     runs-on: ubuntu-latest
     outputs:
-      list: ${{ toJSON(steps.get-list.result.*) }}
+      list: ${{ steps.get-list.result }}
     steps:
       - id: get-list
         uses: actions/github-script@v3
         with:
-          script: 'console.log({ value1: "a", value2: "b" })'
+          result-encoding: string
+          script: 'console.log(["a", "b"])'
 
   use_list:
     runs-on: ubuntu-latest
