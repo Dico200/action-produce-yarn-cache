@@ -24,7 +24,7 @@ jobs:
     needs:
       - prepare
     strategy:
-      matrix: ${{ fromJSONtoJSON((fromJSON(needs.prepare.outputs.ci_matrix.matrix)).matrix)) }}
+      matrix: ${{ fromJSON(toJSON((fromJSON(needs.prepare.outputs.ci_matrix.matrix)).matrix)) }}
 
     steps:
       - uses: actions/setup-node@v2-beta
