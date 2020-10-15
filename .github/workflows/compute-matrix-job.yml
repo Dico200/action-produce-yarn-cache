@@ -3,25 +3,27 @@ name: Compute matrix job
 on: push
 
 jobs:
-  get_list:
+  prepare:
     runs-on: ubuntu-latest
     outputs:
-      list: ${{ steps.get-list.outputs.result }}
+      ci_matrix: ${{ steps.get-ci-matrix.outputs.result }}
     steps:
-      - id: get-list
+      - name: "Get CI matrix"
+        id: get-ci-matrix
         uses: actions/github-script@v3
         with:
-          script: return [1, 2]
+          script: |
+            const script = require(`${process.env.GITHUB_WORKSPACE}/get-ci-matrix.js`);
+            return await script({ github, context, core, io });
 
       - run: echo value=${{ steps.get-list.outputs.result }}
 
-  use_list:
+  run_matrix:
     runs-on: ubuntu-latest
     needs:
-      - get_list
+      - prepare
     strategy:
-      matrix:
-        value: ${{ fromJSON(needs.get_list.outputs.list) }}
+      matrix: ${{ fromJSON(needs.prepare.outputs.ci_matrix) }}
 
     steps:
       - run: "echo value: ${{ matrix.value }}"
