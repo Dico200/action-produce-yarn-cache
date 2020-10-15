@@ -11,7 +11,8 @@ jobs:
       - id: get-list
         uses: actions/github-script@v3
         with:
-          script: 'return ["a", "b"]'
+          result-encoding: string
+          script: return '["a", "b"]'
 
       - run: echo ${{ steps.get-list.result }}
 
@@ -19,9 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - get_list
-    #strategy:
-    #  matrix:
-    #    value: ${{ fromJSON(needs.get_list.outputs.list) }}
+    strategy:
+      matrix:
+        value: ${{ fromJSON(needs.get_list.outputs.list) }}
 
     steps:
-      - run: "echo values: ${{ needs.get_list.outputs.list }}"
+      - run: "echo value: ${{ matrix.value }}"
