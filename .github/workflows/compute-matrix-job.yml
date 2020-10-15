@@ -23,11 +23,11 @@ jobs:
     runs-on: windows-2019
     needs:
       - prepare
-    strategy:
-      matrix: ${{ fromJSON(needs.prepare.outputs.ci_matrix.matrix) }}
+    # strategy:
+    #   matrix: ${{ fromJSON(needs.prepare.outputs.ci_matrix.matrix) }}
 
     steps:
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '>=12'
-      - run: echo ${{ matrix.value }}
+      - run: echo "${{ needs.prepare.outputs.ci_matrix }}"
