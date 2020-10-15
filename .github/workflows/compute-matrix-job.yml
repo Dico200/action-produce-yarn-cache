@@ -33,11 +33,9 @@ jobs:
         with:
           node-version: '>=12'
       - id: get-noslash
-        shell: cmd
-        run: |
-          node -p "`${{ matrix.value }}`.replace(`/`, `_`)" >value.txt
-          set /P value=<value.txt
-          del value.txt
-          echo ::set-output name=value::%value%
+        uses: actions/github-script@v3
+        with:
+          result-encoding: string
+          script: return "${{ matrix.value }}".replace("/", "_")
 
-      - run: "echo value: ${{ steps.get-noslash.outputs.value }}"
+      - run: "echo value: ${{ steps.get-noslash.outputs.result }}"
