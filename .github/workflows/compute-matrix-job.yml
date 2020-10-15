@@ -17,9 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - get_list
-    strategy:
-      matrix:
-        value: ${{ fromJSON(needs.get_list.outputs.list) }}
+    #strategy:
+    #  matrix:
+    #    value: ${{ fromJSON(needs.get_list.outputs.list) }}
 
     steps:
-      - run: "echo value: ${{ matrix.value }}"
+      - run: "echo values: ${{ needs.get_list.outputs.list }}"
