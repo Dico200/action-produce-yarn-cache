@@ -6,22 +6,22 @@ jobs:
   get_list:
     runs-on: ubuntu-latest
     outputs:
-      list: ${{ steps.get-list.result }}
+      list: ${{ steps.get-list.outputs.result }}
     steps:
       - id: get-list
         uses: actions/github-script@v3
         with:
           script: return [1, 2]
 
-      - run: echo value=${{ steps.get-list.result }}
+      - run: echo value=${{ steps.get-list.outputs.result }}
 
   use_list:
     runs-on: ubuntu-latest
     needs:
       - get_list
-    # strategy:
-    #   matrix:
-    #     value: ${{ fromJSON(needs.get_list.outputs) }}
+   strategy:
+     matrix:
+       value: ${{ fromJSON(needs.get_list.outputs.list) }}
 
     steps:
-      - run: "echo value: ${{ toJSON(needs.get_list.outputs) }}"
+      - run: "echo value: ${{ matrix.value }}"
