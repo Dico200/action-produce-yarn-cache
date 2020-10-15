@@ -1,0 +1,26 @@
+name: Compute matrix job
+
+on: push
+
+jobs:
+  get_list:
+    runs-on: ubuntu-latest
+    outputs:
+      list:
+        steps.get-list.result
+    steps:
+      - id: get-list
+        uses: actions/github-script@v3
+        with:
+          script: console.log(["a", "b"])
+
+  use_list:
+    runs-on: ubuntu-latest
+    needs:
+      - get_list
+    strategy:
+      matrix:
+        value: needs.get_list.outputs.list
+
+    steps:
+      - run: "echo value: ${{ matrix.value }}"
