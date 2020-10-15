@@ -12,7 +12,7 @@ jobs:
         uses: actions/github-script@v3
         with:
           result-encoding: string
-          script: 'console.log(["a", "b"])'
+          script: 'console.log(JSON.stringify(["a", "b"]))'
 
       - run: echo ${{ steps.get-list.result }}
 
