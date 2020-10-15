@@ -8,6 +8,9 @@ jobs:
     outputs:
       ci_matrix: ${{ steps.get-ci-matrix.outputs.result }}
     steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
       - name: "Get CI matrix"
         id: get-ci-matrix
         uses: actions/github-script@v3
