@@ -22,11 +22,21 @@ jobs:
       - run: echo value=${{ steps.get-list.outputs.result }}
 
   run_matrix:
-    runs-on: ubuntu-latest
+    runs-on: windows-2019
     needs:
       - prepare
     strategy:
       matrix: ${{ fromJSON(needs.prepare.outputs.ci_matrix) }}
 
     steps:
-      - run: "echo value: ${{ matrix.value }}"
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '>=12'
+      - id: get-noslash
+        run: |
+          node -p "`${{ matrix.environment }}`.replace(`/`, `_`)" >value.txt
+          set /P value=<value.txt
+          del value.txt
+          echo "::set-output name=value::%value%"
+
+      - run: "echo value: ${{ steps.get-noslash.outputs.value }}"
