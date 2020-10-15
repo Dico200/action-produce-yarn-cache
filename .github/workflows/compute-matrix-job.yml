@@ -19,7 +19,7 @@ jobs:
             const script = require(`${process.env.GITHUB_WORKSPACE}/get-ci-matrix.js`);
             return await script({ github, context, core, io });
 
-      - run: echo value=${{ steps.get-list.outputs.result }}
+      - run: echo value=${{ steps.get-ci-matrix.outputs.result }}
 
   run_matrix:
     runs-on: windows-2019
@@ -33,8 +33,9 @@ jobs:
         with:
           node-version: '>=12'
       - id: get-noslash
+        shell: cmd
         run: |
-          node -p "`${{ matrix.environment }}`.replace(`/`, `_`)" >value.txt
+          node -p "`${{ matrix.value }}`.replace(`/`, `_`)" >value.txt
           set /P value=<value.txt
           del value.txt
           echo "::set-output name=value::%value%"
