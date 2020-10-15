@@ -11,8 +11,7 @@ jobs:
       - id: get-list
         uses: actions/github-script@v3
         with:
-          result-encoding: string
-          script: 'console.log(JSON.stringify(["a", "b"]))'
+          script: 'return ["a", "b"]'
 
       - run: echo ${{ steps.get-list.result }}
 
