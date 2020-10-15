@@ -20,11 +20,11 @@ jobs:
             return await script({ github, context, core, io });
 
   run_matrix:
-    runs-on: windows-2019
+    runs-on: ubuntu-latest
     needs:
       - prepare
     strategy:
-      matrix: ${{ fromJSON(toJSON((fromJSON(needs.prepare.outputs.ci_matrix.matrix)).matrix)) }}
+      matrix: ${{ fromJSON(needs.prepare.outputs.ci_matrix)["matrix"] }}
 
     steps:
       - uses: actions/setup-node@v2-beta
