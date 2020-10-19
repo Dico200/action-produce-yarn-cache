@@ -27,8 +27,7 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
 
-    env:
-      ACTION_TEST_SOME_SECRET: ${{ secrets.ACTION_TEST_SOME_SECRET }}
+    env: ${{ fromJSON(secrets.ACTION_TEST_JSON_SECRETS) }}
 
     steps:
       - uses: actions/setup-node@v2-beta
