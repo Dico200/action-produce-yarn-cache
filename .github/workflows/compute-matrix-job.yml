@@ -5,7 +5,8 @@ on: push
 jobs:
   prepare:
     runs-on: ubuntu-latest
-    outputs: ${{ fromJSON(steps.get-ci-matrix.outputs.result) }}
+    outputs:
+      matrix: ${{ fromJSON(steps.get-ci-matrix.outputs.result) }}
 
     steps:
       - name: "Checkout"
