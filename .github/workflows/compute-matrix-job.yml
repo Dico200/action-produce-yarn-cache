@@ -33,5 +33,8 @@ jobs:
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '>=12'
+
       - run: echo "${{ matrix.value }}"
-      - run: echo "$ACTION_TEST_SOME_SECRET"
+      - run: echo "$ACTION_TEST_SOME_SECRET $ACTION_TEST_HIDDEN_SECRET"
+        env:
+          ACTION_TEST_HIDDEN_SECRET: ${{ secrets.ACTION_TEST_HIDDEN_SECRET }}
