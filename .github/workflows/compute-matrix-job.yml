@@ -1,6 +1,8 @@
 name: Compute matrix job
 
-on: push
+on:
+  push: {}
+  release: {}
 
 jobs:
   prepare:
