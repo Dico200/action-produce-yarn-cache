@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.get-ci-matrix.outputs.result }}
+      run_matrix_needs: ${{ steps.get-ci-matrix.outputs.run_matrix_needs }}
 
     steps:
       - name: "Checkout"
@@ -25,10 +26,17 @@ jobs:
             const script = require(`${process.env.GITHUB_WORKSPACE}/get-ci-matrix.js`);
             return await script({ github, context, core, io });
 
+  dependency:
+    runs-on: ubuntu-latest
+    if: false
+
   run_matrix:
     runs-on: ubuntu-latest
     needs:
       - prepare
+      - dependency
+
+    if: true
     strategy:
       matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
 
