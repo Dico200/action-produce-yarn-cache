@@ -29,6 +29,8 @@ jobs:
   dependency:
     runs-on: ubuntu-latest
     if: false
+    steps:
+      - run: echo hi!
 
   run_matrix:
     runs-on: ubuntu-latest
