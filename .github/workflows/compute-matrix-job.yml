@@ -38,7 +38,7 @@ jobs:
       - prepare
       - dependency
 
-    if: true
+    if: always()
     strategy:
       matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
 
