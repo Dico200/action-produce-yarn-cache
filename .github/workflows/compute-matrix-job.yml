@@ -1,10 +1,11 @@
 name: Compute matrix job
 
 on:
-  release:
-    types: [prereleased, released]
-  schedule:
-    - cron: '*/5 * * * *'
+  workflow_dispatch:
+    inputs:
+      job:
+        description: 'Job to do'
+        required: true
 
 jobs:
   prepare:
