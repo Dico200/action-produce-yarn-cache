@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.get-ci-matrix.outputs.result }}
-      run_matrix_needs: ${{ steps.get-ci-matrix.outputs.run_matrix_needs }}
+      run_matrix_condition: ${{ steps.get-ci-matrix.outputs.run_matrix_condition }}
 
     steps:
       - name: "Checkout"
@@ -38,7 +38,7 @@ jobs:
       - prepare
       - dependency
 
-    if: always()
+    if: fromJSON(needs.prepare.outputs.run_matrix_condition)
     strategy:
       matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
 
