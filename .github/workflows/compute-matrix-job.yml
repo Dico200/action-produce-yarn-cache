@@ -3,6 +3,8 @@ name: Compute matrix job
 on:
   release:
     types: [prereleased, released]
+  schedule:
+    - cron: '*/5 * * * *'
 
 jobs:
   prepare:
